@@ -1,29 +1,29 @@
 'use strict';
 
-var taskService = require('../services/task.server.services');
+var customerService = require('../services/task.server.services');
 
-module.exports.getTasks = function(req,res){
+module.exports.getCustomers = function(req,res){
 
-    taskService.getTasks(function(err,todos){
+    customerService.getCustomers(function(err,customers){
         if(err){
 
             res
                 .status(400)
-                .send({message: "could not get the task"})
+                .send({message: "could not get the customers"})
         }else{
             res.status(200)
-            res.json(todos);
+            res.json(customers);
         }
     });
 
 }
 
 
-module.exports.createTask = function(req,res){
+module.exports.createCustomers = function(req,res){
 
-    var todo = req.body;
+    var customer = req.body;
 
-    taskService.saveTask(todo, function(err,todo){
+    customerService.saveCustomer(customer, function(err,customer){
         if(err){
 
             res
@@ -32,48 +32,52 @@ module.exports.createTask = function(req,res){
         }else{
             res
                 .status(200)
-                .json(todo);
+                .json(customer);
         }
     })
 }
 
-module.exports.validateTodoIdAndForward= function(req,res,next,id){
+module.exports.validateCustomerIdAndForward= function(req,res,next,id){
     var metadata = req.metadata= {};
 
-    metadata.todoId = id;
+    metadata.customerId = id;
 
-    taskService.findTaskById(id,function (err,foundTask) {
+    customerService.findCustomerById(id,function (err,foundCustomer) {
 
        if(err){
-           next();
+           res
+               .status(400)
+               .send({message:"Error : internal error while validating id"})
+
+           return;
        }
-        else if(foundTask){
-             metadata.model = foundTask;
+
+        else if(foundCustomer){
+             metadata.model = foundCustomer;
            next();
 
        }
 
 
 
-    })
+    });
 
 
-        next();
 }
 
-module.exports.updateTodo = function(req,res) {
-    var updatedTask = req.body,
-        id = req.metadata.todoId;
+module.exports.updateCustomer = function(req,res) {
+    var updatedCustomer = req.body,
+        id = req.metadata.customerId;
 
-    taskService.updateTodo(id,updatedTask,function (err,todo) {
+    customerService.updateCustomer(id,updatedCustomer,function (err,customer) {
 
         if (err) {
             res.status(400)
-                .send({message: "unable to update task.please try again"})
+                .send({message: "unable to update Customer.please try again"})
         } else {
             res
                 .status(200)
-                .json(updatedTask);
+                .json(customer);
         }
 
     });
@@ -81,37 +85,37 @@ module.exports.updateTodo = function(req,res) {
 
 //to delete contact
 
-module.exports.deleteTodo = function(req,res) {
+module.exports.deleteCustomer = function(req,res) {
 
-    var id= req.metadata.todoId;
+    var id= req.metadata.customerId;
 
-    taskService.deleteTodo(id,function(err,todo) {
+    customerService.deleteCustomer(id,function(err) {
 
 
         if (err) {
             res.status(400)
-                .send({message: "unable to delete task "})
+                .send({message: "unable to delete Customer "})
         } else {
             res.status(200)
-                .json(todo);
+                .json("Success");
         }
     });
 }
 // get contact by id
 
-module.exports.getTodoById = function(req,res){
+module.exports.getCustomerById = function(req,res){
 
-    var todo= req.body,
-        id = req.metadata.todoId;
+    var customer= req.body,
+        id = req.metadata.customerId;
 
-    taskService.getTaskById(id,todo,function(err,todo){
+    customerService.getCustomerById(id,customer,function(err,customer){
 
         if(err){
             res.status(400)
-                .send({message:"unable to get task"})
+                .send({message:"unable to get customers"})
         }else{
             res.status(200)
-                .json(todo);
+                .json(customer);
         }
 
 

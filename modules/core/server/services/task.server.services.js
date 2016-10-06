@@ -2,45 +2,42 @@
 
 var mongoose = require('mongoose'),
 
-    Todo = mongoose.model('credoTask');
+    Customer = mongoose.model('customer');
 
-module.exports.saveTask = function(savableTask,callback){
+module.exports.saveCustomer = function(savableCustomer,callback){
 
-    var todo = new Todo(savableTask);
+    var customer = new Customer(savableCustomer);
 
-    todo.save(function(err){
+    customer.save(function(err){
         if(err){
             callback(err);
         }
-        callback(null,todo);
+        callback(null,customer);
     })
 }
 
-module.exports.getTasks = function(callback){
+module.exports.getCustomers = function(callback){
 
-    Todo.find({},{__v:0}, function(err,todo){
+    Customer.find({},{__v:0}, function(err,customer){
         if(err) throw err;
 
-        callback(null,todo);
+        callback(null,customer);
     })
 
-    // get only completed tasks
-
-    Todo.find({completed:true},callback);
 
 
 }
 
 //get contact by id
 
-module.exports.getTaskById = function(id,todo,callback){
+module.exports.getCustomerById = function(id,customer,callback){
 
 
-    Todo.findOne({'_id':id},function (err,todo) {
+    Customer.findOne({'_id':id},function (err,customer) {
         if(err)
             callback(err);
         else
-            callback(null,todo);
+            callback(null,customer);
     })
 }
 
@@ -48,40 +45,46 @@ module.exports.getTaskById = function(id,todo,callback){
 
 //find contact by id
 
-module.exports.findTaskById = function (id,callback) {
+module.exports.findCustomerById = function (id,callback) {
+    Customer.findOne({'_id':id},function (err,customer) {
+        if(err)
+            callback(err);
+        else
+            callback(null,customer);
 
-    Todo.findOne({'_id':id}, function(err, todo){
-
-        if(err) throw err;
-
-        callback(todo);
-    });
-
-}
-module.exports.updateTodo = function(id,updatedTask,callback){
-
-    Todo.findByIdAndUpdate(id,updatedTask,function(err,todo){
-        if(err) {
-            callback (err);
-        }
-        callback(null,todo);
-    });
+    })
 
 }
+module.exports.updateCustomer = function(id,updatedCustomer,callback){
 
-module.exports.deleteTodo = function(id,callback) {
-    Todo.findByIdAndRemove(id, function (err) {
+
+    var checkCustomer = new Customer(updatedCustomer);
+    Customer.update({_id:id},updatedCustomer,function(err, customer){
+
+        if(err)
+            callback(err);
+        else
+            callback(null,updatedCustomer);
+
+
+    })
+
+}
+
+module.exports.deleteCustomer = function(id,callback) {
+
+    Customer.remove({_id:id},function(err){
+
         if (err) {
             callback(err);
-        }else
-            Todo.find({}, {__v:0}, function(err, todo){
-                if(err) callback(err);
-                else callback(null, todo);
+        }else{
 
-            })
+            callback(null);
+        }
+
+    })
 
 
 
-    });
 
 }

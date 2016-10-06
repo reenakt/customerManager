@@ -1,0 +1,34 @@
+
+<div class="customers view" data-ng-controller="CustomersCtrl">
+    <div class="container">
+        <header>
+            <h3>Customers</h3>
+        </header>
+        <div class="row">
+            <div class="span3">
+                First Name:
+                <br />
+                <input data-ng-model="customer.firstName" type="text" placeholder="First Name">
+            </div>
+            <div class="span3">
+                Last Name:
+                <br />
+                <input data-ng-model="customer.lastName" type="text" placeholder="Last Name">
+            </div>
+            <div class="span6">
+                City:
+                <br />
+                <input data-ng-model="customer.city" type="text" placeholder="Customer City">
+                <button ng-click="create(customer)">Add Customer</button>
+            </div>
+        </div>
+        </div>
+<br /><br />
+<div>
+
+    <a ui-sref="customerorders({customerId:customer._id})"></a>
+
+        </div>
+    </div>
+</div>
+</div>

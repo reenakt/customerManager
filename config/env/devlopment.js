@@ -2,7 +2,7 @@
 'use strict';
 module.exports = {
     db : {
-        uri: 'mongodb://localhost/credo-app',
+        uri: 'mongodb://localhost/customer-app',
         options: {
             user: '',
             pass: ''

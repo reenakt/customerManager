@@ -1,17 +1,23 @@
-<div class="container">
+<nav class="navbar navbar-inverse">
 
-    <div class="jumbotron text-center">
-        <h2><span class="fa fa-lock"></span>ToDo</h2>
+    <div class="container-fluid">
 
-        <p>Click here to see the list task:</p>
+        <div class="navbar-header">
+            <button type="button" class="collapsed navbar-toggle" data-toggle="collapse"
 
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span>
 
+                <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
 
-        <a ui-sref="display" class="btn btn-default"><span class="fa fa-user"></span>ToDoList</a>
+            <a href="#" class="navbar-brand">Customer Manager</a></div>
 
-        <a ui-sref="create" class="btn btn-default"><span class="fa fa-user"></span>ADD</a>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-    </div>
+            <ul class="nav navbar-nav">
 
-</div>
-
+                <li ui-sref-active="active"><a ui-sref="customers">Customers</a></li>
+                <li ui-sref-active="active"><a ui-sref="orders">Orders</a></li>
+            </ul>
+            </div>
+        </div>
+    </nav>

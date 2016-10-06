@@ -11,18 +11,46 @@ var validateFieldStrategy = function (property) {
 }
 
 
-var TodoSchema = new Schema({
+var CustomerSchema = new Schema({
 
-    name:String,
-    completed:Boolean,
-    note:String,
-    created:{
-        type:Date,
-        default:Date.now
-    }
+    firstName:{
+        type:String,
+        default:'',
+        trim:true,
+        validate:[validateFieldStrategy,'Can not be empty']
+    },
+    lastName:{
+        type:String,
+        default:'',
+        trim:true,
+        validate:[validateFieldStrategy,'Can not be empty']
+    },
+    city: {
+        type: String,
+        trim: true,
+        default: '',
+        uppercase: true,
+        validate: [validateFieldStrategy, 'City can not be empty']
+    },
 
+    orders:{
+        product:{
+            type:String
+
+        },
+        price:{
+            type:Number
+        },
+        quantity:{
+            type:Number
+        },
+        orderTotal:{
+            type:Number
+        }
+
+}
 
 
 })
 
-mongoose.model('credoTask', TodoSchema);
+mongoose.model('customer', CustomerSchema);

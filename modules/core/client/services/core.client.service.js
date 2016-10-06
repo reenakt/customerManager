@@ -1,35 +1,35 @@
 'use strict';
 
 angular
-    .module('ToDoApp')
-    .factory('TaskService' , function($http){
+    .module('CustomerManagerApp')
+    .factory('CustomerService' , function($http){
 
-        var  _getTasks = function (){
+        var  _getCustomers = function (){
 
 
-            var promise = $http.get('/api/task');
+            var promise = $http.get('/api/customers');
 
             return promise;
         }
 
-       var _createTask = function(todo){
-           var promise = $http.post('/api/task',todo)
-           return promise;
-       }
-
-        var _getTask = function (id) {
-
-            return $http.get('/api/task/' + id);
+        var _createCustomer = function(customer){
+            var promise = $http.post('/api/customers',customer)
+            return promise;
         }
 
-        var _updateTask = function (id,todo) {
-            var promise = $http.put('/api/task/' +id ,todo)
+        var _getCustomer = function (id) {
+
+            return $http.get('/api/customers/' + id);
+        }
+
+        var _updateCustomer = function (id,customer) {
+            var promise = $http.put('/api/customers/' +id ,customer)
             return promise;
 
         }
 
-        var _deleteTask = function (id) {
-            var promise = $http.delete('/api/task/' +id)
+        var _deleteCustomer = function (id) {
+            var promise = $http.delete('/api/customers/' +id)
             return promise;
 
         }
@@ -37,12 +37,12 @@ angular
 
 
 
-       return {
-           getTasks : _getTasks,
-           getTask :  _getTask,
-           createTask: _createTask,
-           updateTask: _updateTask,
-           deleteTask: _deleteTask
-       }
+        return {
+            getCustomers : _getCustomers,
+            getCustomer :  _getCustomer,
+            createCustomer: _createCustomer,
+            updateCustomer: _updateCustomer,
+            deleteCustomer: _deleteCustomer
+        }
 
     })

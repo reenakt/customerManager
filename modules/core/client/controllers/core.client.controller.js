@@ -1,112 +1,122 @@
 'use strict';
 
 angular
-    .module('ToDoApp')
-    .controller('displayCtrl', ['$scope','$state','TaskService',function($scope,$state,TaskService){
+.module('CustomerManagerApp')
+.controller('CustomersCtrl',['$scope','CustomerService',function ($scope,CustomerService) {
 
+    var customer = $scope.customer;
 
-        var taskPromise = TaskService.getTasks();
+    $scope.create = function (customer) {
+
+        var savePromise = CustomerService.createCustomer(customer);
         var successCallback = function (response) {
-
-            $scope.todos = response;
-
+            console.log("success");
         }
 
         var failureCallback = function (err) {
-            console.log("Error while displaying tasks");
+            console.log("Error while saving task");
         }
-        taskPromise
+
+        savePromise
 
             .success(successCallback)
             .error(failureCallback);
 
-        //update todo after clicking action
+    }
 
-        $scope.update = function (todo) {
+    $scope.deleteCustomer = function (id) {
 
-            $state.go('edit', {todoId: todo._id});
-        }
+        customerService.deleteCustomer(id);
+    }
 
-        $scope.delete = function (id) {
+}])
 
-            var deletePromise = TaskService.deleteTask(id);
+.controller('OrderCtrl',['$scope','CustomerService',function($scope,CustomerService){
 
-            var successCallback = function (response) {
-                $scope.message = response;
+    var customerPromise = CustomerService.getCustomers();
+    var successCallback = function (response) {
 
-            };
-
-            var failureCallback = function (err) {
-                console.log("Error while delete tasks");
-            };
-
-            deletePromise
-
-                .success(successCallback)
-                .error(failureCallback);
-        }
+        $scope.customers = response;
 
 
-    }])
+    }
 
-    .controller('saveCtrl',['$scope','TaskService',function($scope,TaskService){
+    var failureCallback = function (err) {
+        console.log("Error while fetching customers");
+    }
+    customerPromise
+
+        .success(successCallback)
+        .error(failureCallback);
 
 
-        var todo = $scope.todo;
+}])
 
-        $scope.saveTask=function(todo){
+.controller('OrderChildController',function($scope){
 
-            var savePromise = TaskService.createTask(todo);
+    $scope.orderby = 'product';
+    $scope.reverse = false;
+    $scope.ordersTotal = 0.00;
 
-            var successCallback = function (response) {
-                console.log("success");
+
+
+    function init() {
+        if ($scope.customer && $scope.customer.orders){
+            var total = 0.00;
+            for (var i=0;i<$scope.customer.orders.length;i++){
+                var order = $scope.customer.order[i];
+
+                total += order.orderTotal;
             }
-
-            var failureCallback = function (err) {
-                console.log("Error while saving task");
-            }
-
-            savePromise
-
-                .success(successCallback)
-                .error(failureCallback);
         }
-    }])
 
-    .controller('editCtrl',['$scope','todoId','TaskService', function ($scope , todoId, TaskService) {
+        $scope.setOrder = function(orderby){
+            if(orderby === $scope.orderby){
+                $scope.reverse = !$scope.reverse;
+            }
+            $scope.orderby = orderby;
+        };
 
-        TaskService
+    }
 
-            .getTask(todoId)
-            .success(function(todo){
 
-                $scope.task=todo;
+})
+    .controller('CustomerOrderCtrl',['$scope','customerId','CustomerService',function($scope,customerId,CustomerService){
 
+        CustomerService
+
+            .getCustomer(customerId)
+            .success(function(customer){
+                $scope.customer=customer;
             }).error(function(err){
             console.log("Error::occured during get operation")
         })
+
+
     }])
 
 
-    .controller('updateCtrl',['$scope','TaskService','$state',function ($scope,TaskService,$state) {
 
 
-        $scope.update = function(todo) {
-            var updatePromise = TaskService.updateTask(todo._id ,todo);
-            var successCallback = function (response) {
-                console.log("success");
-                $state.go('display');
-            };
 
-            var failureCallback = function (err) {
-                console.log("Error while update task");
-                $state.go('edit');
-            }
 
-            updatePromise
 
-                .success(successCallback)
-                .error(failureCallback);
 
-        }
-    }])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

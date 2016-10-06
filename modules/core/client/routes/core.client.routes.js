@@ -2,39 +2,45 @@
 
 angular
 
-    .module('ToDoApp')
+    .module('CustomerManagerApp')
     .config(function($stateProvider) {
 
         $stateProvider
 
 
-            .state('display' ,{
+            .state('customers' ,{
 
-                url:'/display',
-                templateUrl:'modules/core/client/views/display.client.tpl.html'
-
-
-            })
-
-
-
-            .state('create', {
-                url: '/create',
-                templateUrl: 'modules/core/client/views/create.client.tpl.html'
+                url:'/customers',
+                templateUrl:'modules/core/client/views/customers.client.tpl.html'
 
 
             })
+            .state('customerorders' ,{
 
-            .state('edit',{
-                url:'/edit/:todoId',
-                templateUrl:'modules/core/client/views/edit.client.tpl.html',
-                resolve: {
-                    todoId: function ($stateParams) {
-                        return $stateParams.todoId;
+                url:'/customer/orders/:customerId',
+                templateUrl:'modules/core/client/views/customerorders.client.tpl.html',
+
+                resolve:{
+                    customerId:  function($stateParams){
+                        return $stateParams.customerId;
                     }
                 },
-                controller:'editCtrl'
+
+                controller: 'CustomerOrderCtrl'
+
             })
+
+
+            .state('orders', {
+                url: '/orders',
+                templateUrl: 'modules/core/client/views/orders.client.tpl.html'
+
+
+            })
+
+
+
+
 
 
 

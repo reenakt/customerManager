@@ -14,18 +14,18 @@ module.exports = function(app){
 
     app
 
-        .route('/api/task')
-        .get(controller.getTasks)
-        .post(controller.createTask)
+        .route('/api/customers')
+        .get(controller.getCustomers)
+        .post(controller.createCustomers)
 
     app
-        .route('/api/task/:todoId')
-        .put(controller.updateTodo)
-        .delete(controller.deleteTodo)
-        .get(controller.getTodoById)
+        .route('/api/customers/:customerId')
+        .put(controller.updateCustomer)
+        .delete(controller.deleteCustomer)
+        .get(controller.getCustomerById)
 
 
-    app.param('todoId',controller.validateTodoIdAndForward);
+    app.param('customerId',controller.validateCustomerIdAndForward);
 
 
 

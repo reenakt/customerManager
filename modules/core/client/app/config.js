@@ -3,7 +3,7 @@
 var ApplicationConfiguration = (function () {
 
 
-    var  _applicationModuleName='ToDoApp',
+    var  _applicationModuleName='CustomerManagerApp',
 
         _applicationDependencies = ['ui.router'];
 
